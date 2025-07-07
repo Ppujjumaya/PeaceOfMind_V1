@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "498636721217",
+    "project_id": "peaceofmind-9dd6c",
+    "storage_bucket": "peaceofmind-9dd6c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498636721217:android:83856e5aa4ed33713c8ac0",
+        "android_client_info": {
+          "package_name": "com.pjmy.project.peaceofmind"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAipEt7oUzgVwn6QQdby3l8dxKSJ3mDZE0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,59 @@
+[versions]
+agp = "8.8.0"
+kotlin = "2.0.0"
+coreKtx = "1.16.0"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+lifecycleRuntimeKtx = "2.9.1"
+activityCompose = "1.10.1"
+composeBom = "2024.04.01"
+firebaseBom = "33.1.0" # 최신 Firebase BOM 버전 확인 (현재 2025.07.06 기준)
+googleGms = "4.4.1" # google-services 플러그인 버전 (현재 2025.07.06 기준)
+# firebasePerf = "1.4.2" # Performance Monitoring 플러그인 버전
+# Anvis: 아래 라인 추가. 버전은 당신의 Kotlin 버전과 동일하게 맞춰주세요.
+kotlinSerialization = "2.0.0" # 예시 버전, 당신의 kotlin 버전과 맞추세요.
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+
+# Firebase BoM (Bill of Materials) 추가 - 모든 Firebase 라이브러리 버전을 일관되게 관리
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+# Firebase Firestore (REQ-005: 이미지 메타데이터 저장)
+firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx" }
+# Firebase Storage (REQ-005: 이미지 파일 저장)
+firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx" }
+# Firebase Analytics (REQ-001: 사용자 통계)
+firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+# Firebase Performance Monitoring (앱 성능 모니터링에 유용 - 선택 사항)
+# firebase-perf-ktx = { group = "com.google.firebase", name = "firebase-perf-ktx" }
+# Firebase Crashlytics (앱 충돌 보고 - 선택 사항이지만 개발에 매우 유용)
+# firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
+# Firebase AdMob (REQ-020: 광고) - 나중에 AdMob 연동 시 추가
+# play-services-ads = { group = "com.google.android.gms", name = "play-services-ads", version = "23.0.0" } # 최신 버전 직접 명시
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version = "1.6.3" }
+
+
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+google-gms = { id = "com.google.gms.google-services", version.ref = "googleGms" }
+# firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebasePerf" }
+# Anvis: 아래 라인 추가
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization" }
