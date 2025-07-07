@@ -6,14 +6,17 @@ import androidx.lifecycle.viewModelScope
 import com.pjmy.project.peaceofmind.data.model.ImageItem
 import com.pjmy.project.peaceofmind.data.model.SharedArtwork
 import com.pjmy.project.peaceofmind.data.model.UserProgress
+import com.pjmy.project.peaceofmind.repository.CommunityRepository
+import com.pjmy.project.peaceofmind.repository.ImageRepository
+import com.pjmy.project.peaceofmind.repository.UserProgressRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-
 // ui/home/HomeViewModel.kt 파일 상단 또는 별도 파일에 정의
+
 
 data class HomeUiState(
     val isLoading: Boolean = true,
@@ -44,10 +47,34 @@ class HomeViewModel(
 
         viewModelScope.launch {
             try {
-                // Anvis: 각기 다른 데이터들을 동시에 비동기적으로 가져와 로딩 시간을 단축합니다. (성능 최적화)
+                // Anvis: 추천 로직에 필요한 데이터를 먼저 가져옵니다.
+                // 실제 앱에서는 로그인된 사용자 ID를 전달해야 합니다.
+                val userId = "CURRENT_USER_ID"
+                val completedThemes = userProgressRepository.getAllCompletedThemes(userId)
+                val completedImageIds = userProgressRepository.getAllCompletedImageIds(userId)
+
+                // 사용자가 가장 많이 완료한 테마 2개를 선호 테마로 선정합니다.
+                val favoriteThemes = completedThemes
+                    .groupingBy { it }
+                    .eachCount()
+                    .entries
+                    .sortedByDescending { it.value }
+                    .take(2)
+                    .map { it.key }
+
+                // Anvis: 이제 각 데이터를 동시에 비동기적으로 가져옵니다.
                 val continueDeferred = async { userProgressRepository.getContinueColoringItems(limit = 5) }
                 val newDeferred = async { imageRepository.getNewImages(limit = 10) }
-                val recommendedDeferred = async { imageRepository.getRecommendationsByThemes(/*...*/) }
+
+                // Anvis: 아래 라인의 /*...*/ 부분을 실제 데이터로 채워줍니다.
+                val recommendedDeferred = async {
+                    imageRepository.getRecommendationsByThemes(
+                        favoriteThemes = favoriteThemes,
+                        completedImageIds = completedImageIds,
+                        limit = 10
+                    )
+                }
+
                 val topTenDeferred = async { communityRepository.getTopTenArtworks() }
 
                 // 모든 비동기 작업이 끝날 때까지 기다립니다.

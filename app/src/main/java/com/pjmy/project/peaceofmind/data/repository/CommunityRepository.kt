@@ -1,3 +1,4 @@
+package com.pjmy.project.peaceofmind.repository
 // data/repository/CommunityRepository.kt
 
 import com.pjmy.project.peaceofmind.data.model.SharedArtwork

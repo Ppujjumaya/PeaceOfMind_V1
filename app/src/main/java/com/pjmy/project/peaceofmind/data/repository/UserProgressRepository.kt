@@ -1,3 +1,4 @@
+package com.pjmy.project.peaceofmind.repository
 // data/repository/UserProgressRepository.kt
 
 import com.pjmy.project.peaceofmind.data.model.UserProgress
