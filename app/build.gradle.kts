@@ -6,6 +6,10 @@ plugins {
     // alias(libs.plugins.firebase.perf) // Performance Monitoring 플러그인. 추가했다면 여기도 추가
     // kotlinx.serialization 플러그인 추가
     alias(libs.plugins.kotlin.serialization)
+    //id("kotlin-kapt")
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
+
 }
 
 android {
@@ -77,4 +81,13 @@ dependencies {
     // implementation(libs.play.services.ads)
     // Kotlinx Serialization (JSON 파싱용)
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
+    implementation("io.coil-kt:coil-compose:2.6.0")
+    // navigation 라이브러리에 대한 추가
+    implementation(libs.androidx.navigation.compose)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    implementation(libs.hilt.navigation.compose)
 }

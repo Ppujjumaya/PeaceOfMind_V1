@@ -1,4 +1,4 @@
-package com.pjmy.project.peaceofmind.repository
+package com.pjmy.project.peaceofmind.data.repository
 // data/repository/ImageRepository.kt
 
 import com.pjmy.project.peaceofmind.data.model.ColoringData
@@ -39,5 +39,13 @@ interface ImageRepository {
      * @return ColoringData
      */
     suspend fun getColoringData(dataUrl: String): ColoringData?
+
+    /**
+     * Anvis: 아래 함수를 새로 추가합니다.
+     * 특정 ID를 가진 그림의 메타데이터(ImageItem)를 가져옵니다.
+     * @param imageId 가져올 이미지의 ID
+     * @return ImageItem 또는 없을 경우 null
+     */
+    suspend fun getImageById(imageId: String): ImageItem?
 
 }

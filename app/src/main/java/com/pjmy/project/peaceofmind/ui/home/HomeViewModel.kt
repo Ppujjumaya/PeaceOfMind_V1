@@ -1,14 +1,13 @@
 // ui/home/HomeViewModel.kt
 package com.pjmy.project.peaceofmind.ui.home
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pjmy.project.peaceofmind.data.model.ImageItem
 import com.pjmy.project.peaceofmind.data.model.SharedArtwork
 import com.pjmy.project.peaceofmind.data.model.UserProgress
-import com.pjmy.project.peaceofmind.repository.CommunityRepository
-import com.pjmy.project.peaceofmind.repository.ImageRepository
-import com.pjmy.project.peaceofmind.repository.UserProgressRepository
+import com.pjmy.project.peaceofmind.data.repository.CommunityRepository
+import com.pjmy.project.peaceofmind.data.repository.ImageRepository
+import com.pjmy.project.peaceofmind.data.repository.UserProgressRepository
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,6 +15,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 // ui/home/HomeViewModel.kt 파일 상단 또는 별도 파일에 정의
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 
 data class HomeUiState(
@@ -28,7 +30,8 @@ data class HomeUiState(
 )
 
 // Anvis: 실제로는 Hilt/Koin 같은 DI 라이브러리를 통해 Repository들을 주입받아야 합니다.
-class HomeViewModel(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     private val imageRepository: ImageRepository,
     private val userProgressRepository: UserProgressRepository,
     private val communityRepository: CommunityRepository
@@ -79,6 +82,7 @@ class HomeViewModel(
 
                 // 모든 비동기 작업이 끝날 때까지 기다립니다.
                 val continueItems = continueDeferred.await()
+                // ##moon
                 val newItems = newDeferred.await()
                 val recommendedItems = recommendedDeferred.await()
                 val topTenItems = topTenDeferred.await()

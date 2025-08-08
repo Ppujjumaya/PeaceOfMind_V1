@@ -1,47 +1,67 @@
+// MainActivity.kt
 package com.pjmy.project.peaceofmind
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.pjmy.project.peaceofmind.ui.theme.PeaceOfMind_V1Theme
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.pjmy.project.peaceofmind.data.repository.ImageRepositoryImpl
+import com.pjmy.project.peaceofmind.ui.home.HomeScreen
+//import com.pjmy.project.peaceofmind.ui.home.HomeViewModel
+import com.pjmy.project.peaceofmind.ui.navigation.AppNavigation
+import com.pjmy.project.peaceofmind.ui.theme.PeaceOfMindTheme
 
+import com.pjmy.project.peaceofmind.data.repository.CommunityRepository
+import com.pjmy.project.peaceofmind.data.repository.UserProgressRepository
+import dagger.hilt.android.AndroidEntryPoint
+
+@AndroidEntryPoint // Anvis: Hilt를 위해 이 어노테이션을 추가해야 합니다.
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            PeaceOfMind_V1Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+            PeaceOfMindTheme {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    AppNavigation()
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+// Anvis: 임시로 사용할 더미 Repository들입니다. 나중에 실제 구현으로 교체해야 합니다.
+class DummyUserProgressRepository : UserProgressRepository {
+    override suspend fun getContinueColoringItems(limit: Int): List<com.pjmy.project.peaceofmind.data.model.UserProgress> {
+        return emptyList()
+    }
+
+    override suspend fun getAllCompletedThemes(userId: String): List<String> {
+        return emptyList()
+    }
+
+    override suspend fun getAllCompletedImageIds(userId: String): List<String> {
+        return emptyList()
+    }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PeaceOfMind_V1Theme {
-        Greeting("Android")
+class DummyCommunityRepository : CommunityRepository {
+    override suspend fun getTopTenArtworks(): List<com.pjmy.project.peaceofmind.data.model.SharedArtwork> {
+        return emptyList()
+    }
+
+    override suspend fun getSharedArtworks(sortBy: String): List<com.pjmy.project.peaceofmind.data.model.SharedArtwork> {
+        return emptyList()
+    }
+
+    override suspend fun likeArtwork(artworkId: String, userId: String) {
+        // Do nothing
     }
 }
